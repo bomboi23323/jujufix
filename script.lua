@@ -16,7 +16,7 @@ if not LPH_OBFUSCATED then
     LPH_JIT = function(...) return ... end
 end
 
-getgenv()["Alv"] = {}
+getgenv()["juju"] = {}
 
 -- > ( bypass )
 
@@ -43,7 +43,7 @@ LPH_JIT_MAX(function()
         end
 
         --[[if connection_count < 4 then
-            cloneref(game:GetService("Players"))["LocalPlayer"]:Kick("[Alv]\nda hood has updated, please wait for Alv to update.")
+            cloneref(game:GetService("Players"))["LocalPlayer"]:Kick("[juju]\nda hood has updated, please wait for juju to update.")
             task["wait"](9e9) -- << idk if this will yield in luraph ?
             return
         end]]
@@ -109,8 +109,6 @@ local hui = cloneref(gethui())
 
 local color3_fromrgb = Color3["fromRGB"]
     local color3_lerp = color3_fromrgb()["Lerp"]
-local raw_vector2_new = Vector2["new"]
-Vector2["new"] = function(x, y) return raw_vector2_new(x or 0, y or 0) end
 local vector2_new = Vector2["new"]
 local udim2_new = UDim2["new"]
 
@@ -343,7 +341,7 @@ local menu = {
         ["error"] = color3_fromrgb(39, 60, 96),
         ["alert"] = color3_fromrgb(30, 51, 61),
         ["logo"] = color3_fromrgb(154, 213, 222),
-        ["alv"] = color3_fromrgb(154, 213, 222),
+        ["juju"] = color3_fromrgb(154, 213, 222),
         ["build"] = color3_fromrgb(154, 213, 222),
         ["cursor"] = color3_fromrgb(154, 213, 222),
     },
@@ -396,8 +394,8 @@ do
         }
 
 
-        if not isfolder("Alv recode") then
-            makefolder("Alv recode")
+        if not isfolder("juju recode") then
+            makefolder("juju recode")
         end
 
         local recursive_check
@@ -418,7 +416,7 @@ do
             end
         end
 
-        recursive_check("Alv recode/", files)
+        recursive_check("juju recode/", files)
     end
 
     -- > ( custom drawing )
@@ -595,6 +593,10 @@ do
                 local parent_position = parent["real_position"]
                 local real_parent_size = parent["real_size"]
 
+                if type(real_parent_size) == "number" then
+                    real_parent_size = vector2_new(0, 0)
+                end
+
                 real_position = vector2_new((parent_position["X"] + real_parent_size["X"] * position["X"]["Scale"]) + position["X"]["Offset"], (parent_position["Y"] + real_parent_size["Y"] * position["Y"]["Scale"]) + position["Y"]["Offset"])
             end
 
@@ -639,6 +641,10 @@ do
 
             if parent then
                 local parent_size = parent["real_size"]
+
+                if type(parent_size) == "number" then
+                    parent_size = vector2_new(0, 0)
+                end
 
                 real_size = vector2_new((parent_size["X"] * size["X"]["Scale"]) + size["X"]["Offset"], (parent_size["Y"] * size["Y"]["Scale"]) + size["Y"]["Offset"])
             end
@@ -726,7 +732,7 @@ do
 
     local logo = drawing_proxy["new"]("Image", {
         ["Color"] = menu["colors"]["accent"],
-        ["Data"] = readfile("Alv recode/assets/logo.png"),
+        ["Data"] = readfile("juju recode/assets/logo.png"),
         ["Position"] = udim2_new(0, 15, 0, 15),
         ["Parent"] = inside,
         ["Size"] = udim2_new(0, 35, 0, 35),
@@ -737,7 +743,7 @@ do
     local juju_text = drawing_proxy["new"]("Text", {
         ["Font"] = 1,
         ["Color"] = color3_fromrgb(255, 255, 255),
-        ["Text"] = "Alv Private",
+        ["Text"] = "juju",
         ["Parent"] = logo,
         ["Position"] = udim2_new(1, 5, 0, 3),
         ["Size"] = 14,
@@ -1173,7 +1179,7 @@ do
 
     function menu:load_theme(theme)
         if theme then
-            local path = "Alv recode/themes/"..theme..".th"
+            local path = "juju recode/themes/"..theme..".th"
             if isfile(path) then
                 local s, data = pcall(function()
                     return http_service:JSONDecode(readfile(path))
@@ -1682,7 +1688,7 @@ do
 
         if menu["saved"] then
             menu["saved"] = false
-            writefile("Alv recode/data.dat", http_service:JSONEncode({
+            writefile("juju recode/data.dat", http_service:JSONEncode({
                 ["notifications"] = do_notifications,
                 ["favorites"] = menu["favorites"],
                 ["theme"] = menu["theme"],
